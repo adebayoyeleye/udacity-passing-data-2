@@ -106,9 +106,38 @@ class App extends Component {
           <h1 className="App-title">ReactND - Coding Practice</h1>
         </header>
         <h2>How Popular is Your Favorite Movie?</h2>
+		<ul>
+{
+  Object.entries(movies).map(([key, value]) => {
+    return (
+      <li key = {value.id}>
+      <h2>{value.name}</h2>
+		<LikedBy movieId={value.id} />
+      </li>
+      )
+  })
+}
+		</ul>
       </div>
     );
   }
+}
+
+class LikedBy extends Component {
+ render() {
+   const liked = profiles.filter(profile => profile.favoriteMovieID == this.props.movieId);
+   if (Array.isArray(liked) && !liked.length) return (<p>None of the current users liked this movie</p>);
+   else return (
+     <div>
+     <p>Liked By:</p>
+<ul>
+   {
+    liked.map(profile => <li key={profile.userID} >{users[profile.userID].name}</li>)
+   }
+</ul>
+    </div>
+   );
+ }
 }
 
 export default App;
